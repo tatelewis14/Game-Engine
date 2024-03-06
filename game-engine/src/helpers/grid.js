@@ -2,6 +2,12 @@ export const gridCells = n =>{
     return n * 16
 }
 
-export function isSpaceFree(wall, x, y) {
-    
+export function isSpaceFree(walls, x, y) {
+    const str = ``
+
+
+
+
+
+    return true
 }
