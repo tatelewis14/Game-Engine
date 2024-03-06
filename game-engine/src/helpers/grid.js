@@ -3,11 +3,8 @@ export const gridCells = n =>{
 }
 
 export function isSpaceFree(walls, x, y) {
-    const str = ``
+    const coords = `${x},${y}`; // x and y for lookup
 
-
-
-
-
-    return true
+    const isWallPresent = walls.has(coords); // lookup
+    return !isWallPresent
 }

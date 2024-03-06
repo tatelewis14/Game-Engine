@@ -3,8 +3,9 @@ import { Sprite } from "./src/Sprite.js"
 import { Vector2 } from "./src/Vector2.js"
 import { GameLoop } from "./src/GameLoop.js";
 import { Input } from "./src/Input.js";
-import { gridCells } from "./src/helpers/grid.js";
+import { gridCells, isSpaceFree } from "./src/helpers/grid.js";
 import { moveTo } from "./src/helpers/moveTo.js";
+import { walls } from './src/helpers/level1.js'
 
 const canvas = document.getElementById('gc');
 const ctx = canvas.getContext('2d');
@@ -98,8 +99,12 @@ const update = () => {
                 break;
         }
 
-        heroDest.x = nextX; //update destination
-        heroDest.y = nextY; //update destination
+        if(isSpaceFree(walls, nextX,nextY)) { // if space is free
+            heroDest.x = nextX; //update destination
+            heroDest.y = nextY; //update destination
+        }
+
+        
     }
 }
 
