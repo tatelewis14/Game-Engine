@@ -1,11 +1,14 @@
-import { Resources } from "./src/Resources.js";
-import { Sprite } from "./src/Sprite.js"
-import { Vector2 } from "./src/Vector2.js"
-import { GameLoop } from "./src/GameLoop.js";
-import { Input } from "./src/Input.js";
+import { Resources } from "./src/objects/Resources.js";
+import { Sprite } from "./src/objects/Sprite.js"
+import { Vector2 } from "./src/objects/Vector2.js"
+import { GameLoop } from "./src/objects/GameLoop.js";
+import { Input } from "./src/objects/Input.js";
 import { gridCells, isSpaceFree } from "./src/helpers/grid.js";
 import { moveTo } from "./src/helpers/moveTo.js";
 import { walls } from './src/helpers/level1.js'
+import { WALK_DOWN, WALK_RIGHT, WALK_UP, WALK_LEFT, STAND_DOWN, STAND_RIGHT, STAND_LEFT, STAND_UP    } from "./src/objects/hero/heroAnimations.js"
+import { FrameIndexPattern } from "./src/FrameIndexPatter.js";
+import { Animations } from "./src/objects/Animations.js";
 
 const canvas = document.getElementById('gc');
 const ctx = canvas.getContext('2d');
@@ -24,7 +27,8 @@ const hero = new Sprite({
     vFrames: 8,
     frame: 0,
     frameSize: new Vector2(32,32),
-    position: new Vector2(gridCells(6), gridCells(5))
+    position: new Vector2(gridCells(6), gridCells(5)),
+    animation: 
 }) 
 
 const heroDest = hero.position.duplicate()
@@ -60,7 +64,7 @@ const draw = () => {
     
 }
 
-const update = () => {
+const update = (delta) => {
     const distance = moveTo(hero, heroDest, 1)
     const hasArrived = distance <= 1
     if(hasArrived) {
@@ -72,6 +76,9 @@ const update = () => {
         if(!input.direction) {
             return;
         }
+
+        // work on movement animatoins
+        hero.step(delta);
 
         let nextX = heroDest.x; // set current position
         let nextY = heroDest.y

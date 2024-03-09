@@ -9,7 +9,8 @@ export class Sprite {
         hFrames,//which frame to crop from the row
         frame, //which frame to show
         scale, // how large to draw the image
-        position // where to draw it
+        position, // where to draw it
+        animation
     }) {
         this.resource = resource,
         this.frameSize = frameSize ?? new Vector2(16,16),
@@ -19,7 +20,15 @@ export class Sprite {
         this.scale = scale ?? 1,
         this.frameMap = new Map()
         this.position = position ?? new Vector2(0,0);
+        this.animation = animation ?? 500;
         this.buildFrameMap()
+    }
+    step(delta) {
+        if(!this.animation) {
+            return;
+        }
+        this.animation.step(delta)
+        this.frame = this.animation.frame
     }
     buildFrameMap() {
         let frameCount = 0;
